@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SandBox.unity
+    guid: 368acb4e280aaa743801aaaab7702e66
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e89f700249db9e24fbdd0d3ba527e6b3, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f9e46282980378e488900018b96b257d, type: 2}
