@@ -15,6 +15,8 @@ public class RadialSelection : MonoBehaviour
     [Range(2,10)]
     public int numberOfRadialPart;
     public GameObject radialPartPrefab;
+    public GameObject radialButtonPrefab; 
+    
     public Transform radialPartCanvas;
     public float angleBetweenPart = 10;
     public Transform handTransform;
@@ -22,6 +24,8 @@ public class RadialSelection : MonoBehaviour
     public UnityEvent<int> OnPartSelected;
 
     private List<GameObject> spawnedParts = new List<GameObject>();
+    private List<GameObject> spawnedButtons = new List<GameObject>();
+    
     private int currentSelectedRadialPart = -1;
     private bool _isSelecting = false;
     
@@ -156,8 +160,15 @@ public class RadialSelection : MonoBehaviour
         {
             Destroy(item);
         }
+        
+        foreach (var item in spawnedButtons)
+        {
+            Destroy(item);
+        }
 
         spawnedParts.Clear();
+        spawnedButtons.Clear();
+        
         //should check number of radial pars in the menu manager
         numberOfRadialPart = _menuDataManager.GetNumberOfButtons();
         
@@ -175,7 +186,14 @@ public class RadialSelection : MonoBehaviour
             spawnedParts.Add(spawnedRadialPart);
             
             //spawn radial button
+            Vector3 spawnposition = spawnedRadialPart.GetComponentInChildren<ButtonUILocation>().transform.position;
             
+            
+            GameObject spawnedRadialButton = Instantiate(radialButtonPrefab, radialPartCanvas);
+            spawnedRadialButton.transform.position = spawnposition;
+            spawnedButtons.Add(spawnedRadialButton);
+            
+
             //pass the angle of the radial part and the original position of the radial menu, and the integer of the radial part
         }
         
