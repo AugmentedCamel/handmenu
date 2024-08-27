@@ -7722,6 +7722,7 @@ GameObject:
   - component: {fileID: 1691802971}
   - component: {fileID: 1691802972}
   - component: {fileID: 1691802973}
+  - component: {fileID: 1691802974}
   m_Layer: 0
   m_Name: MenuParent
   m_TagString: Untagged
@@ -7774,6 +7775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnButton: 0
+  _menuDataManager: {fileID: 1691802974}
   numberOfRadialPart: 4
   radialPartPrefab: {fileID: 3826667213659388384, guid: 1fca64babb73c6649928114ba84daea6, type: 3}
   radialPartCanvas: {fileID: 653899506}
@@ -7797,6 +7799,54 @@ MonoBehaviour:
   _thumbTip: {fileID: 1102190888}
   selectionDistanceThreshold: 0.05
   currentDistance: 0
+--- !u!114 &1691802974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691802970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514d786953a3c5b4c9df19904af71879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuPages:
+  - name: start
+    menuItems:
+    - text: Back
+      icon: {fileID: 21300000, guid: ffb02d288a83f3d4f9ec608f2dc6c1bb, type: 3}
+      action:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: Next
+      icon: {fileID: 21300000, guid: 519f04815e94d0e47a030c18fd0d83be, type: 3}
+      action:
+        m_PersistentCalls:
+          m_Calls: []
+  - name: start
+    menuItems:
+    - text: Back
+      icon: {fileID: 21300000, guid: ffb02d288a83f3d4f9ec608f2dc6c1bb, type: 3}
+      action:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: Next
+      icon: {fileID: 21300000, guid: 519f04815e94d0e47a030c18fd0d83be, type: 3}
+      action:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: Next
+      icon: {fileID: 21300000, guid: 519f04815e94d0e47a030c18fd0d83be, type: 3}
+      action:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: Next
+      icon: {fileID: 21300000, guid: 519f04815e94d0e47a030c18fd0d83be, type: 3}
+      action:
+        m_PersistentCalls:
+          m_Calls: []
+  currentPage: 0
 --- !u!1 &1695723627
 GameObject:
   m_ObjectHideFlags: 0

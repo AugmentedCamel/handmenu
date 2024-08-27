@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using HandMenuPackages;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -8,7 +9,9 @@ using NaughtyAttributes;
 public class RadialSelection : MonoBehaviour
 {
     public OVRInput.Button spawnButton;
-
+    [Required]
+    [SerializeField] private MenuDataManager _menuDataManager;
+    
     [Range(2,10)]
     public int numberOfRadialPart;
     public GameObject radialPartPrefab;
@@ -30,7 +33,7 @@ public class RadialSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _menuDataManager = GetComponent<MenuDataManager>();
     }
 
     // Update is called once per frame
@@ -155,7 +158,10 @@ public class RadialSelection : MonoBehaviour
         }
 
         spawnedParts.Clear();
-
+        //should check number of radial pars in the menu manager
+        numberOfRadialPart = _menuDataManager.GetNumberOfButtons();
+        
+        
         for (int i = 0; i < numberOfRadialPart; i++)
         {
             float angle = - i * 360 / numberOfRadialPart - angleBetweenPart /2;
@@ -166,8 +172,11 @@ public class RadialSelection : MonoBehaviour
             spawnedRadialPart.transform.localEulerAngles = radialPartEulerAngle;
 
             spawnedRadialPart.GetComponent<Image>().fillAmount = (1 / (float)numberOfRadialPart) - (angleBetweenPart/360);
-
             spawnedParts.Add(spawnedRadialPart);
+            
+            //spawn radial button
+            
+            //pass the angle of the radial part and the original position of the radial menu, and the integer of the radial part
         }
         
         //enable selecting
