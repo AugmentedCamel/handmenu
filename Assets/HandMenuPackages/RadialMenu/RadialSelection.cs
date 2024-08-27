@@ -77,24 +77,7 @@ public class RadialSelection : MonoBehaviour
 
     public void HideAndTriggerSelected()
     {
-        /*
-        // Check the distance between the hand's current position and the spawn position
-        if (Vector3.Distance(handTransform.position, spawnPosition) > selectionDistanceThreshold)
-        {
-            // If the distance is greater than the threshold, trigger the OnPartSelected event
-            OnPartSelected.Invoke(currentSelectedRadialPart);
-        }else
-        {
-            // If the distance is less than the threshold, do not trigger the OnPartSelected event
-            Debug.Log("Distance less than threshold");
-        }
-
-        radialPartCanvas.gameObject.SetActive(false);
-
-        //disableSelecting
-        _isSelecting = false;
-        */   
-       
+        
         OnPartSelected.Invoke(currentSelectedRadialPart);
         radialPartCanvas.gameObject.SetActive(false);
         
@@ -120,6 +103,15 @@ public class RadialSelection : MonoBehaviour
         {
             //Debug.Log("Distance less than threshold");
             //should unslecect all and return
+            for (int i = 0; i < spawnedParts.Count; i++)
+            {
+                if (i == currentSelectedRadialPart)
+                {
+                    spawnedParts[i].GetComponent<Image>().color = Color.white;
+                    spawnedParts[i].transform.localScale = Vector3.one;
+                }
+            }
+
             return;
         }
         
