@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -57,7 +58,19 @@ namespace HandMenuPackages
             int numberOfButtons = menuPages[currentPage].menuItems.Count;
             return numberOfButtons;
         }
-
+        
+        public Sprite GetButtonIcon(int buttonIndex)
+        {
+            Sprite icon = menuPages[currentPage].menuItems[buttonIndex].icon;
+            return icon;
+        }
+        
+        public UnityEvent GetButtonAction(int buttonIndex)
+        {
+            UnityEvent action = menuPages[currentPage].menuItems[buttonIndex].action;
+            return action;
+        }
+        
         private void OnPageChange()
         {
             //load the page

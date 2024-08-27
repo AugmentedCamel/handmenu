@@ -25,6 +25,7 @@ public class RadialSelection : MonoBehaviour
 
     private List<GameObject> spawnedParts = new List<GameObject>();
     private List<GameObject> spawnedButtons = new List<GameObject>();
+    //private List<UnityAction> buttonActions = new List<UnityAction>();
     
     private int currentSelectedRadialPart = -1;
     private bool _isSelecting = false;
@@ -88,6 +89,25 @@ public class RadialSelection : MonoBehaviour
         OnPartSelected.Invoke(currentSelectedRadialPart);
         radialPartCanvas.gameObject.SetActive(false);
         
+        for (int i = 0; i < spawnedParts.Count; i++)
+        {
+            if (i == currentSelectedRadialPart)
+            {
+                spawnedParts[i].GetComponent<Image>().color = Color.white;
+                spawnedParts[i].transform.localScale = Vector3.one;
+                    
+                spawnedButtons[i].GetComponent<Button>().OnDeselect(null);
+            }
+        }
+        
+        if(_menuDataManager.menuPages[_menuDataManager.currentPage].menuItems[currentSelectedRadialPart].action != null)
+        {
+            UnityAction action = _menuDataManager.menuPages[_menuDataManager.currentPage].menuItems[currentSelectedRadialPart].action.Invoke;
+              action.Invoke();
+              Debug.Log("Action invoked");
+        }
+        
+        
         //disableSelecting
         _isSelecting = false;
          
@@ -116,6 +136,9 @@ public class RadialSelection : MonoBehaviour
                 {
                     spawnedParts[i].GetComponent<Image>().color = Color.white;
                     spawnedParts[i].transform.localScale = Vector3.one;
+                    
+                    spawnedButtons[i].GetComponent<Button>().OnDeselect(null);
+                    currentSelectedRadialPart = -1;
                 }
             }
 
@@ -139,6 +162,8 @@ public class RadialSelection : MonoBehaviour
             {
                 spawnedParts[i].GetComponent<Image>().color = Color.yellow;
                 spawnedParts[i].transform.localScale = 1.1f * Vector3.one;
+                
+                spawnedButtons[i].GetComponent<Button>().Select();
             }
             else
             {
@@ -166,8 +191,11 @@ public class RadialSelection : MonoBehaviour
             Destroy(item);
         }
 
+        
+
         spawnedParts.Clear();
         spawnedButtons.Clear();
+        
         
         //should check number of radial pars in the menu manager
         numberOfRadialPart = _menuDataManager.GetNumberOfButtons();
@@ -191,6 +219,13 @@ public class RadialSelection : MonoBehaviour
             
             GameObject spawnedRadialButton = Instantiate(radialButtonPrefab, radialPartCanvas);
             spawnedRadialButton.transform.position = spawnposition;
+            spawnedRadialButton.transform.localEulerAngles = Vector3.zero;
+            if (_menuDataManager.GetButtonIcon(i) != null)
+            {
+                spawnedRadialButton.GetComponent<Image>().sprite = _menuDataManager.GetButtonIcon(i);
+            }
+            
+         
             spawnedButtons.Add(spawnedRadialButton);
             
 
