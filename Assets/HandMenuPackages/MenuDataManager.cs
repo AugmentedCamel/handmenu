@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,7 +30,7 @@ namespace HandMenuPackages
         
         public int currentPage = 0;
         
-        [Button]
+      
         public void NextPage()
         {
             currentPage++;
@@ -42,7 +41,7 @@ namespace HandMenuPackages
             }
         }
         
-        [Button]
+    
         public void PreviousPage()
         {
             currentPage--;
@@ -64,6 +63,13 @@ namespace HandMenuPackages
             Sprite icon = menuPages[currentPage].menuItems[buttonIndex].icon;
             return icon;
         }
+
+        public string GetButtonText(int buttonIndex)
+        {
+            string text = menuPages[currentPage].menuItems[buttonIndex].text;
+            return text;
+        }
+
         
         public UnityEvent GetButtonAction(int buttonIndex)
         {

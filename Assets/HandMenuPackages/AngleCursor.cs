@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using NaughtyAttributes;
+
 
 public class AngleCursor : MonoBehaviour
 {
@@ -11,7 +11,6 @@ public class AngleCursor : MonoBehaviour
     [SerializeField] private float _duration = 1f; // Duration of the rotation animation
     
     
-    [Button]
     public void RotateToAngle()
     {
         RotateToAngle(_angle);

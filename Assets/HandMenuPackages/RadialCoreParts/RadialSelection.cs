@@ -4,18 +4,19 @@ using HandMenuPackages;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using NaughtyAttributes;
+using Unity.VisualScripting;
 
 public class RadialSelection : MonoBehaviour
 {
     public OVRInput.Button spawnButton;
-    [Required]
+    
     [SerializeField] private MenuDataManager _menuDataManager;
     
     [Range(2,10)]
     public int numberOfRadialPart;
     public GameObject radialPartPrefab;
-    public GameObject radialButtonPrefab; 
+    public GameObject radialButtonPrefabRight;
+    public GameObject radialButtonPrefabLeft; 
     
     public Transform radialPartCanvas;
     public float angleBetweenPart = 10;
@@ -65,19 +66,19 @@ public class RadialSelection : MonoBehaviour
         }
     }
     
-    [Button]
+   
     public void TriggerSpawnRadialPart()
     {
         SpawnRadialPart();
     }
     
-    [Button]
+  
     public void TriggerGetSelectedRadialPart()
     {
         GetSelectedRadialPart();
     }
     
-    [Button]
+
     public void TriggerHideAndTriggerSelected()
     {
         HideAndTriggerSelected();
@@ -136,7 +137,9 @@ public class RadialSelection : MonoBehaviour
                 {
                     spawnedParts[i].GetComponent<Image>().color = Color.white;
                     spawnedParts[i].transform.localScale = Vector3.one;
-                    
+
+                    //spawnedButtons[i].GetComponent<Button>().animationTriggers.normalTrigger = "Normal";
+                    spawnedButtons[i].GetComponent<Button>().OnPointerExit(null);
                     spawnedButtons[i].GetComponent<Button>().OnDeselect(null);
                     currentSelectedRadialPart = -1;
                 }
@@ -151,7 +154,7 @@ public class RadialSelection : MonoBehaviour
         if (angle < 0)
             angle += 360;
 
-        Debug.Log("ANGLE " + angle);
+        //Debug.Log("ANGLE " + angle);
 
 
         currentSelectedRadialPart = (int) angle * numberOfRadialPart / 360;
@@ -162,11 +165,14 @@ public class RadialSelection : MonoBehaviour
             {
                 spawnedParts[i].GetComponent<Image>().color = Color.yellow;
                 spawnedParts[i].transform.localScale = 1.1f * Vector3.one;
+
+                spawnedButtons[i].GetComponent<Button>().OnPointerEnter(null);
                 
-                spawnedButtons[i].GetComponent<Button>().Select();
             }
             else
             {
+                spawnedButtons[i].GetComponent<Button>().OnPointerExit(null);
+                
                 spawnedParts[i].GetComponent<Image>().color = Color.white;
                 spawnedParts[i].transform.localScale = Vector3.one;
             }
@@ -216,16 +222,38 @@ public class RadialSelection : MonoBehaviour
             //spawn radial button
             Vector3 spawnposition = spawnedRadialPart.GetComponentInChildren<ButtonUILocation>().transform.position;
             
-            
+            GameObject radialButtonPrefab;
+            //check if the button is on the right or left side
+            if (angle > 90 || angle < -90)
+            {
+                radialButtonPrefab = radialButtonPrefabLeft;
+            }
+            else
+            {
+                radialButtonPrefab = radialButtonPrefabRight;
+            }
+
             GameObject spawnedRadialButton = Instantiate(radialButtonPrefab, radialPartCanvas);
             spawnedRadialButton.transform.position = spawnposition;
             spawnedRadialButton.transform.localEulerAngles = Vector3.zero;
+
+            ButtonInitializer buttonInitializer = spawnedRadialButton.GetComponent<ButtonInitializer>();
+
             if (_menuDataManager.GetButtonIcon(i) != null)
             {
-                spawnedRadialButton.GetComponent<Image>().sprite = _menuDataManager.GetButtonIcon(i);
+                Sprite sprite = _menuDataManager.GetButtonIcon(i);
+                if (_menuDataManager.GetButtonText(i) != null)
+                {
+                    string text = _menuDataManager.GetButtonText(i);
+                    if (string.IsNullOrEmpty(text))
+                    {
+                        text = "";
+                    }
+                    buttonInitializer.Initialize(sprite, text);
+                }
             }
+
             
-         
             spawnedButtons.Add(spawnedRadialButton);
             
 

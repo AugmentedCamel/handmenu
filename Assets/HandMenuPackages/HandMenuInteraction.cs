@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using HandMenuPackages.HandCore;
-using NaughtyAttributes;
+
 using UnityEngine;
 
 public class HandMenuInteraction : MonoBehaviour
@@ -45,7 +45,7 @@ public class HandMenuInteraction : MonoBehaviour
         
     }
     
-    [Button]
+ 
     public void HideInteractable()
     {
         StartCoroutine(DelayedHideInteractable(1f));
@@ -98,7 +98,7 @@ public class HandMenuInteraction : MonoBehaviour
         //something is chosen
     }
     
-    [Button]
+
     public void DeactivatePinchMenu()
     {
         _menuVisualController.DeactivateMenuCircle();
